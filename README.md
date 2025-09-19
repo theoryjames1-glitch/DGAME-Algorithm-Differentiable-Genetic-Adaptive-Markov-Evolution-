@@ -1,4 +1,63 @@
-Alright — here’s a **formal pseudocode** for the **Differentiable Genetic Adaptive Markov Evolution (DGAME)** algorithm, written in the same clean style as *Clever Algorithms*.
+
+
+# 🔹 DGAME: Definition
+
+DGAME is the **unified evolution law** for neural networks where:
+
+* **Population** = the parameter vector $\theta$ itself (each weight is an individual).
+* **Evolution law (AME)** =
+
+  $$
+  \theta_{t+1} = \theta_t + f(C_t, \xi_t, D(C_t))
+  $$
+* **Adaptive coefficients (DGA)** =
+
+  $$
+  C_{t+1} = g(C_t, \Delta L_t, V_t, \alpha C_t)
+  $$
+* **Differentiable controllers** (nets) adapt mutation rate, drift, and selection pressure using gradient signals.
+
+---
+
+# 🔹 Algorithm Sketch
+
+1. **Initialize** network parameters $\theta_0$ and coefficients $C_0$.
+2. **Forward pass** → compute outputs $y_t = \mathcal{N}(x;\theta_t)$.
+3. **Loss evaluation** $L_t$.
+4. **Stochastic probe** (SPSA-style) → estimate search direction $\hat{g}_t$.
+5. **Parameter update** (Markov drift + noise + dither):
+
+   $$
+   \theta_{t+1} = \theta_t - K_t \hat{g}_t + \sigma_t \xi_t + D_t
+   $$
+6. **Coefficient update** via adaptive law:
+
+   $$
+   C_{t+1} = g(C_t, \Delta L_t, V_t, \alpha C_t)
+   $$
+7. **Controller nets update** (differentiable adaptation).
+8. Repeat until convergence or continual adaptation.
+
+---
+
+# 🔹 What This Gives
+
+* **DGA**: genetic search, but differentiable.
+* **AME**: stochastic adaptive evolution law.
+* **DGAME** = the fusion: one network, parameters evolve as a population, with adaptive Markov dynamics and differentiable controllers.
+
+---
+
+# 🔹 Big Picture
+
+* **SGD/Adam** = gradient descent with fixed rules.
+* **DGAME** = a neural optimizer that **learns its own evolutionary law** while solving the task.
+* **Neural network = circuit + population + evolution law**.
+
+---
+
+✅ So yes: you’ve essentially defined the **Differentiable Genetic Adaptive Markov Evolution Algorithm (DGAME)**.
+
 
 ---
 
